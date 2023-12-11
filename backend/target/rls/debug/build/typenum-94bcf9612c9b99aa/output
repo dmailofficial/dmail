@@ -1,2 +1,0 @@
-cargo:rustc-env=TYPENUM_BUILD_CONSTS=/Users/jwen/workspace/dmail/dfinity-react-wanxiang/backend/target/rls/debug/build/typenum-94bcf9612c9b99aa/out/consts.rs
-cargo:rustc-env=TYPENUM_BUILD_OP=/Users/jwen/workspace/dmail/dfinity-react-wanxiang/backend/target/rls/debug/build/typenum-94bcf9612c9b99aa/out/op.rs

@@ -1,2 +1,0 @@
-cargo:rerun-if-changed=src/parser/grammar.lalrpop
-processing file `src/parser/grammar.lalrpop`
