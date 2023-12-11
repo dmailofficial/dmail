@@ -10,6 +10,7 @@ pub struct Rand {
     w: u64,
 }
 
+
 impl Rand {
     pub fn new(seed: u64) -> Rand {
         Rand {
