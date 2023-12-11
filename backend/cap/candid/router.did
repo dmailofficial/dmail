@@ -1,0 +1,56 @@
+type CanisterStatusResponse = record {
+  status : Status;
+  memory_size : nat;
+  cycles : nat;
+  settings : DefiniteCanisterSettings;
+  module_hash : opt vec nat8;
+};
+type DefiniteCanisterSettings = record {
+  freezing_threshold : nat;
+  controllers : vec principal;
+  memory_allocation : nat;
+  compute_allocation : nat;
+};
+type GetIndexCanistersResponse = record {
+  witness : opt Witness;
+  canisters : vec principal;
+};
+type GetTokenContractRootBucketArg = record {
+  witness : bool;
+  canister : principal;
+};
+type GetTokenContractRootBucketResponse = record {
+  witness : opt Witness;
+  canister : opt principal;
+};
+type GetUserRootBucketsArg = record { user : principal; witness : bool };
+type GetUserRootBucketsResponse = record {
+  witness : opt Witness;
+  contracts : vec principal;
+};
+type Result = variant { Ok : CanisterStatusResponse; Err : text };
+type Status = variant { stopped; stopping; running };
+type WithWitnessArg = record { witness : bool };
+type Witness = record { certificate : vec nat8; tree : vec nat8 };
+service : {
+  // d only use
+  get_index_canisters : (WithWitnessArg) -> (GetIndexCanistersResponse) query;
+  // main
+  get_token_contract_root_bucket : (GetTokenContractRootBucketArg) -> (
+      GetTokenContractRootBucketResponse,
+    ) query;
+  // user
+  get_user_root_buckets : (GetUserRootBucketsArg) -> (
+      GetUserRootBucketsResponse,
+    ) query;
+  bucket_status : (principal) -> (Result);
+
+
+  custom_upgrade_root_bucket : (principal, opt vec nat8) -> (text);
+  deploy_plug_bucket : (principal, nat64) -> ();
+  git_commit_hash : () -> (text) query;
+  insert_new_users : (principal, vec principal) -> ();
+  install_bucket_code : (principal) -> ();
+  root_buckets_to_upgrade : () -> (nat64, vec principal) query;
+  trigger_upgrade : (text) -> ();
+}

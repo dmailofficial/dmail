@@ -1,0 +1,27 @@
+type ContactDetail = record {
+  pid : opt principal;
+  nickname : opt text;
+  alias : text;
+};
+type InitArgs = record { name : opt text; custodians : opt vec principal };
+type ManualReply = record {
+  name : opt text;
+  created_at : nat64;
+  upgraded_at : nat64;
+  custodians : vec principal;
+};
+type Result = variant { Ok; Err : text };
+type Result_1 = variant { Ok : opt text; Err : text };
+type Result_2 = variant { Ok : opt vec ContactDetail; Err : text };
+service : (opt InitArgs) -> {
+  createUpdateAvatar : (principal, text) -> (Result);
+  createUpdateContact : (principal, ContactDetail) -> (Result);
+  custodians : () -> (vec principal) query;
+  metadata : () -> (ManualReply) query;
+  name : () -> (opt text) query;
+  queryAvatarByPid : (principal) -> (Result_1) query;
+  queryCaller : () -> (text) query;
+  queryContactByPid : (principal) -> (Result_2) query;
+  setCustodians : (vec principal) -> ();
+  setName : (text) -> ();
+}

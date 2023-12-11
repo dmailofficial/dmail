@@ -1,0 +1,113 @@
+{
+  "canisters": {
+    "body": {
+      "candid": "body/body.did",
+      "package": "body",
+      "type": "rust"
+    },
+    "profile": {
+      "candid": "profile/profile.did",
+      "package": "profile",
+      "type": "rust"
+    },
+    "cache": {
+      "candid": "cache/cache.did",
+      "package": "cache",
+      "type": "rust"
+    },
+    "did_cache": {
+      "candid": "did_cache/did_cache.did",
+      "package": "did_cache",
+      "type": "rust"
+    },
+    "router": {
+      "candid": "router/router.did",
+      "package": "router",
+      "type": "rust"
+    },
+    "nft": {
+      "package": "nft",
+      "candid": "nft/nft.did",
+      "type": "rust"
+    },
+    "dmail_nft": {
+      "package": "dmail_nft",
+      "candid": "dmail_nft/dmail_nft.did",
+      "type": "rust"
+    },
+    "amino_nft": {
+      "package": "amino_nft",
+      "candid": "amino_nft/amino_nft.did",
+      "type": "rust"
+    },
+    "cap": {
+      "wasm": "cap.wasm",
+      "candid": "cap.did",
+      "type": "custom"
+    },
+    "wallet_agent": {
+      "candid": "wallet_agent/wallet_agent.did",
+      "package": "wallet_agent",
+      "type": "rust"
+    },
+    "wallet_agent_v2": {
+      "candid": "wallet_agent/wallet_agent.did",
+      "package": "wallet_agent",
+      "type": "rust"
+    },
+    "wallet_agent_v3": {
+      "candid": "wallet_agent/wallet_agent.did",
+      "package": "wallet_agent",
+      "type": "rust"
+    },
+    "wallet_market": {
+      "candid": "wallet_market/wallet_market.did",
+      "package": "wallet_market",
+      "type": "rust"
+    },
+    "jwt_cache": {
+      "candid": "jwt_cache/jwt_cache.did",
+      "package": "jwt_cache",
+      "type": "rust"
+    },
+    "pre_wallet_agent": {
+      "candid": "wallet_agent/wallet_agent.did",
+      "package": "wallet_agent",
+      "type": "rust"
+    },
+    "pre_wallet_agent_1": {
+      "candid": "wallet_agent/wallet_agent.did",
+      "package": "wallet_agent",
+      "type": "rust"
+    },
+    "pre_wallet_agent_v2": {
+      "candid": "wallet_agent_v2/wallet_agent.did",
+      "package": "wallet_agent_v2",
+      "type": "rust"
+    },
+    "airdrop_relay": {
+      "candid": "airdrop_relay/airdrop_relay.did",
+      "package": "airdrop_relay",
+      "type": "rust"
+    },
+    "dmail_nft_v2": {
+      "candid": "dmail_nft_v2/dmail_nft_v2.did",
+      "package": "dmail_nft_v2",
+      "type": "rust"
+    },
+    "dmail_nft_v3": {
+      "candid": "dmail_nft_v3/dmail_nft_v3.did",
+      "package": "dmail_nft_v3",
+      "type": "rust"
+    },
+    "dmail_front_assets": {
+      "frontend": {
+        "entrypoint": "build/index.html"
+      },
+      "source": [
+        "build/"
+      ],
+      "type": "assets"
+    }
+  }
+}

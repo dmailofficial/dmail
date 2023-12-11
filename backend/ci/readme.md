@@ -1,0 +1,1 @@
+body canister must be the last one to deploy, before you deploy body canister, others canister must be deploy

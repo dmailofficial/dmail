@@ -1,0 +1,347 @@
+// BEGIN DIP-721 //
+ type ApproveResult =
+ variant {
+   Err: ApiError;
+   Ok: User;
+ };
+
+ type ApiError =
+ variant {
+   Unauthorized;
+   InvalidTokenId;
+   ZeroAddress;
+   Other;
+
+   //dmail
+   AliasFormatFail:text;
+   AliasHasBeenTaken;
+ };
+
+ type OwnerResult =
+ variant {
+   Err: ApiError;
+   Ok: principal;
+ };
+
+ type TxReceipt =
+ variant {
+   Err: ApiError;
+   Ok: nat;
+ };
+
+ type InterfaceId =
+ variant {
+   Approval;
+   TransactionHistory;
+   Mint;
+   Burn;
+   TransferNotification;
+ };
+
+ type LogoResult =
+ record {
+   logo_type: text; // MIME type of the logo
+   data: text; // Base64 encoded logo
+ };
+
+ type ExtendedMetadataResult =
+ record {
+     metadata_desc: MetadataDesc;
+     token_id: nat64;
+ };
+
+ type MetadataResult =
+ variant {
+   Err: ApiError;
+   Ok: MetadataDesc;
+ };
+
+ type MetadataDesc = vec MetadataPart;
+
+ type MetadataPart = record {
+   purpose: MetadataPurpose;
+   key_val_data: vec MetadataKeyVal;
+   data: blob;
+ };
+
+ type MetadataPurpose =
+ variant {
+     Preview; // used as a preview, can be used as preivew in a wallet
+     Rendered; // used as a detailed version of the NFT
+ };
+
+ type MetadataKeyVal =
+ record {
+     key: text;
+     val: MetadataVal;
+ };
+
+ type MetadataVal =
+ variant {
+    TextContent : text;
+    BlobContent : blob;
+    NatContent : nat;
+    Nat8Content: nat8;
+    Nat16Content: nat16;
+    Nat32Content: nat32;
+    Nat64Content: nat64;
+  };
+
+// type TransactionResult =
+// record {
+//     fee: nat;
+//     transaction_type: TransactionType;
+// };
+
+ type TransactionType =
+ variant {
+      Transfer:
+      record {
+        token_id: nat64;
+        from: principal;
+        to: principal;
+     };
+     TransferFrom:
+      record {
+          token_id: nat64;
+          from: principal;
+          to: principal;
+      };
+      Approve:
+       record {
+          token_id: nat64;
+          from: principal;
+          to: principal;
+       };
+      SetApprovalForAll:
+       record {
+          from: principal;
+          to: principal;
+       };
+      Mint:
+       record {
+          token_id: nat64;
+          to: principal;
+       };
+      Burn:
+       record {
+          token_id: nat64;
+       };
+ };
+
+ type MintReceipt =
+ variant {
+   Err: ApiError;
+   Ok: MintReceiptPart;
+ };
+
+ type MintReceiptPart =
+ record {
+   token_id: nat64; // minted token id
+   id: nat // transaction id
+  };
+
+// END DIP-721 //
+
+type Balance = nat;
+type Memo = blob;
+type SubAccount = vec nat8;
+type TokenIdentifier = text;
+type TokenIndex = nat32;
+type AccountIdentifier = text;
+
+ type User =
+ variant {
+   address: AccountIdentifier;
+   "principal": principal;
+ };
+
+ type TransferRequest =
+ record {
+   amount: Balance;
+   from: User;
+   memo: Memo;
+   notify: bool;
+   subaccount: opt SubAccount;
+   to: User;
+   token: TokenIdentifier;
+ };
+
+ type TransferResponse =
+ variant {
+   Err:
+    variant {
+      CannotNotify: AccountIdentifier;
+      InsufficientBalance;
+      InvalidToken: TokenIdentifier;
+      Other: text;
+      Rejected;
+      Unauthorized: AccountIdentifier;
+    };
+   Ok: Balance;
+ };
+
+ type MintRequest =
+ record {
+   metadata: opt MetadataContainer;
+   to: User;
+ };
+
+ type CommonError =
+ variant {
+   InvalidToken: TokenIdentifier;
+   Other: text;
+ };
+
+ type AccountIdentifierReturn =
+ variant {
+   Err: CommonError;
+   Ok: AccountIdentifier;
+ };
+
+ type BalanceReturn =
+ variant {
+   Err: CommonError;
+   Ok: Balance;
+ };
+
+ type MetadataReturn =
+ variant {
+   Err: CommonError;
+   Ok: Metadata;
+ };
+
+ type TokenMetadata =
+ record {
+   account_identifier: AccountIdentifier;
+   metadata: Metadata;
+   token_identifier: TokenIdentifier;
+   "principal": principal;
+ };
+ type TokenDisplayList = record {
+  token_id:text;
+  principal_id:text;
+  nft_content:text;
+ };
+
+ type Metadata =
+ variant {
+   fungible:
+    record {
+      name: text;
+      symbol: text;
+      decimals: nat8;
+      metadata: opt MetadataContainer;
+    };
+   nonfungible: opt MetadataContainer;
+ };
+
+  type MetadataContainer =
+  variant {
+    data : vec MetadataValue;
+    "blob" : blob;
+    json : text;
+  };
+
+  type MetadataValue =
+  record {text; Value};
+
+  type Value =
+  variant {
+    "text" : text;
+    "blob" : blob;
+    "nat" : nat;
+    "nat8": nat8;
+  };
+
+ type TransactionId = nat;
+ type Date = nat64;
+
+ type Transaction =
+ record {
+   txid: TransactionId;
+   request: TransferRequest;
+   date: Date;
+ };
+
+ type TransactionRequestFilter =
+ variant {
+   txid: TransactionId;
+   user: User;
+   date: record {Date; Date;};
+   page: record {nat; nat;};
+ };
+
+ type TransactionRequest =
+ record {
+     "query": TransactionRequestFilter;
+     token: TokenIdentifier;
+ };
+
+ type TrasactionsResult =
+ variant {
+   Err: CommonError;
+   Ok: vec Transaction;
+ };
+
+ type erc721_token =
+ service {
+   // HEALTH-CHECK //
+   name: () -> (text) query;
+
+   // BEGIN DIP-721 //
+   approveDip721: (spender: principal, token_id: nat64) -> (ApproveResult);
+   balanceOfDip721: (user: principal) -> (nat64) query;
+   ownerOfDip721: (token_id: nat64) -> (OwnerResult) query;
+   safeTransferFromDip721: (from: principal, to: principal, token_id: nat64) -> (TxReceipt);
+   transferFromDip721: (from: principal, to: principal, token_id: nat64) -> (TxReceipt);
+   supportedInterfacesDip721: () -> (vec InterfaceId) query;
+   logoDip721: () -> (LogoResult) query;
+   nameDip721: () -> (text) query;
+   symbolDip721: () -> (text) query;
+   totalSupplyDip721: () -> (nat64) query;
+   getMetadataDip721: (token_id: nat64) -> (MetadataResult) query;
+   getMaxLimitDip721: () -> (nat16) query;
+   mintDip721: (to: principal, metadata: MetadataDesc) -> (MintReceipt);
+   getMetadataForUserDip721: (user: principal) -> (vec ExtendedMetadataResult);
+   getTokenIdsForUserDip721: (user: principal) -> (vec nat64) query;
+   // END DIP-721 //
+
+   transfer: (TransferRequest) -> (TransferResponse);
+   bearer: (TokenIdentifier) -> (AccountIdentifierReturn) query;
+   getAllMetadataForUser: (User) -> (vec TokenMetadata) query;
+   supply: (TokenIdentifier) -> (BalanceReturn) query;
+   metadata: (TokenIdentifier) -> (MetadataReturn)  query;
+   add: (TransferRequest) -> (TransactionId);
+
+  //Dmail
+  display_all_token:()->(vec TokenDisplayList)query;
+  check_mint_bind:(principal,text) -> (opt bool) query;
+  batch_mint_nft_to_market:() -> (variant {
+   Err: ApiError;
+   Ok: bool;
+  });
+  bind:(TokenIdentifier,principal) -> (variant {
+   Err: ApiError;
+   Ok: bool;
+  });
+  unbind:(principal) -> (variant {
+   Err: ApiError;
+   Ok: bool;
+  });
+  query_pid_by_alias:(text)-> (opt principal) query;
+  query_bind_alias_by_pid:(principal)-> (opt text) query;
+  query_alias_by_pid:(principal) -> (opt vec text) query;
+  queryCaller:()->(text) query;
+  replace_pid:(nat64,principal) -> (variant {
+   Err: ApiError;
+   Ok: bool;
+  });
+  mint_nft_to_market:(principal,nat64,text,bool) -> (variant { Ok; Err : text });
+  single_mint_nft_to_market:(principal,nat64,text,bool)  -> (variant {
+   Err: ApiError;
+   Ok: bool;
+  });
+ };
+
+service : (principal, text, text, principal) -> erc721_token

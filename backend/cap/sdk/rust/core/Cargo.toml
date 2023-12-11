@@ -1,0 +1,19 @@
+[package]
+name = "cap-sdk-core"
+version = "0.2.3"
+edition = "2018"
+
+license = "GPL-3.0"
+description = "The core for Cap's SDK. This crate shouldn't be used for implementing support for cap, see cap-sdk instead."
+homepage = "https://github.com/Psychedelic/cap"
+repository = "https://github.com/Psychedelic/cap"
+documentation = "https://crates.io/cap_standards"
+
+
+[dependencies]
+cap-common = { path = "../../../common", version = "0.2" }
+ic-kit = "0.4"
+ic-cdk = "0.5"
+candid = "0.7"
+thiserror = "1"
+serde = { version = "1", features = ["derive"] }

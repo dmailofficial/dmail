@@ -1,0 +1,24 @@
+type DetailValue = variant {
+  I64 : int64;
+  U64 : nat64;
+  Vec : vec DetailValue;
+  Slice : vec nat8;
+  TokenIdU64 : nat64;
+  Text : text;
+  True;
+  False;
+  Float : float64;
+  Principal : principal;
+};
+type Event = record {
+  time : nat64;
+  operation : text;
+  details : vec record { text; DetailValue };
+  caller : principal;
+};
+service : {
+  get_nft_owner : (nat64) -> (principal) query;
+  get_transaction_by_id : (nat64) -> (Event);
+  mint : (principal) -> (nat64);
+  transfer : (principal, nat64) -> ();
+}

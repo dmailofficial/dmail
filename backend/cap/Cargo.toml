@@ -1,0 +1,15 @@
+[workspace]
+members = [
+    "common",
+    "canisters/router",
+    "canisters/root",
+    "canisters/bucket",
+    "canisters/sdk_example",
+    "sdk/rust/core",
+    "sdk/rust",
+    "sdk/rust/standards"
+]
+
+[profile.release]
+lto = true
+opt-level = 'z'

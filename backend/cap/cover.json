@@ -1,0 +1,18 @@
+{
+  "cap-router": {
+    "canisterId": "lj532-6iaaa-aaaah-qcc7a-cai",
+    "repoUrl": "Psychedelic/cap",
+    "commitHash": "a757011bfd56e33276d239fb0a9244d0df5cdefb",
+    "rustVersion": "1.61.0",
+    "dfxVersion": "0.9.3",
+    "optimizeCount": 1
+  },
+  "cap-router-test": {
+    "canisterId": "lhtux-ciaaa-aaaag-qakpa-cai",
+    "repoUrl": "Psychedelic/cap",
+    "commitHash": "19deaa804a0322dc4fe25b7549c8a90cbab90116",
+    "rustVersion": "1.61.0",
+    "dfxVersion": "0.9.3",
+    "optimizeCount": 1
+  }
+}

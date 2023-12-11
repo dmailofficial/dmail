@@ -1,0 +1,24 @@
+[package]
+name = "cap-common"
+version = "0.2.3"
+edition = "2018"
+authors = ["Parsa Ghadimi <parsa@fleek.co>"]
+license = "GPL-3.0"
+
+description = "The common data structures of CAP. This crate shouldn't be used for implementing support for cap, see cap-sdk instead."
+homepage = "https://github.com/Psychedelic/cap"
+repository = "https://github.com/Psychedelic/cap"
+
+[dependencies]
+ic-certified-map = "0.3"
+certified-vars = "0.1"
+ic-kit = "0.4"
+ic-cdk = "0.5"
+candid = "0.7"
+sha2 = "0.10.2"
+serde = "1.0.116"
+serde_cbor = "0.11.2"
+serde_bytes = "0.11.5"
+
+[target.'cfg(not(target_family = "wasm"))'.dependencies]
+async-std = { version="1.10.0", features = ["attributes"] }

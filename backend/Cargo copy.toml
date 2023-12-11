@@ -1,0 +1,27 @@
+[workspace]
+members = [
+    "body",
+    "cache",
+    "router",
+    "dmail_nft",
+    "dmail_nft_v2",
+    "amino_nft",
+    "wallet_agent",
+    # "wallet_agent_v2",
+    "nft",
+    "wallet_market",
+    "did_cache",
+    "jwt_cache",
+    "airdrop_relay",
+    "common",
+    "cap/canisters/router",
+    "cap/canisters/root",
+    "cap/canisters/bucket",
+    "cap/canisters/sdk_example",
+]
+
+
+[profile.release]
+lto = true
+opt-level = 'z'
+overflow-checks = true

@@ -1,0 +1,159 @@
+#on: [ push, pull_request ]
+
+name: Continuous integration
+
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build
+    needs: fmt
+    runs-on: ubuntu-latest
+    env:
+      DFX_VERSION: 0.9.3
+      DFX_WARNING: -version_check
+    steps:
+      - name: Cache Dfx
+        id: cache-dfx
+        uses: actions/cache@v2
+        with:
+          path: |
+            /usr/local/bin/dfx
+          key: cache-dfx-${{ hashFiles('dfx.json') }}
+
+      - name: Install DFX
+        if: steps.cache-dfx.outputs.cache-hit != 'true'
+        run: |
+          yes Y | DFX_VERSION="$DFX_VERSION" sh -ci "$(curl -fsSL https://sdk.dfinity.org/install.sh)"
+
+      - uses: actions/checkout@v2
+      - name: Cache Output Files
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-output
+        with:
+          path: target
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
+
+      - name: Cache Cargo Dir
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/.cargo
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          target: wasm32-unknown-unknown
+          override: true
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - uses: actions-rs/install@v0.1
+        with:
+          crate: ic-cdk-optimizer
+          version: latest
+          use-tool-cache: true
+      - uses: actions-rs/cargo@v1
+      - run: export PATH=/home/runner/.cargo/bin:$PATH
+      - run: dfx build --network ic
+
+  check:
+    name: Check
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache Output Files
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-output
+        with:
+          path: target
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          target: wasm32-unknown-unknown
+          override: true
+      - uses: actions-rs/cargo@v1
+        with:
+          command: check
+
+  test:
+    name: Test Suite
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache Output Files
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-output
+        with:
+          path: target
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: actions-rs/cargo@v1
+        with:
+          command: test
+
+  fmt:
+    name: Rustfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          target: wasm32-unknown-unknown
+          override: true
+      - run: rustup component add rustfmt
+      - uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --all -- --check
+
+  clippy:
+    name: Clippy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache Output Files
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-output
+        with:
+          path: target
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          target: wasm32-unknown-unknown
+          override: true
+      - run: rustup component add clippy
+      - uses: actions-rs/cargo@v1
+        with:
+          command: clippy
+          args: -- -D warnings
+

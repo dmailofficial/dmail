@@ -1,0 +1,63 @@
+{
+  "amino_nft": {
+    "ic": "4phuj-zqaaa-aaaak-acp7a-cai"
+  },
+  "body": {
+    "ic": "3rb7l-giaaa-aaaak-aa57q-cai"
+  },
+  "cache": {
+    "ic": "ea7tw-yaaaa-aaaak-aam6q-cai"
+  },
+  "did_cache": {
+    "ic": "ap72f-nqaaa-aaaak-adqca-cai"
+  },
+  "dmail_front_assets": {
+    "ic": "evyc3-ziaaa-aaaak-aam5a-cai"
+  },
+  "dmail_nft": {
+    "ic": "42fn2-wyaaa-aaaak-aafwq-cai"
+  },
+  "dmail_nft_v2": {
+    "ic": "qohn4-fiaaa-aaaak-ady6a-cai"
+  },
+  "dmail_nft_v3": {
+    "ic": "d7z55-6yaaa-aaaak-ae3oa-cai"
+  },
+  "airdrop_relay": {
+    "ic": "coap6-2aaaa-aaaak-qcuha-cai"
+  },
+  "jwt_cache": {
+    "ic": "ptfkz-4iaaa-aaaal-qbtla-cai"
+  },
+  "nft": {
+    "ic": "wyj5p-yqaaa-aaaak-acj2q-cai"
+  },
+  "pre_dmail_front_assets": {
+    "ic": "ofbzl-tqaaa-aaaak-aav5q-cai"
+  },
+  "pre_wallet_agent": {
+    "ic": "6clrt-hqaaa-aaaak-aen6q-cai"
+  },
+  "pre_wallet_agent_1": {},
+  "pre_wallet_agent_v2": {
+    "ic": "wr5pc-gqaaa-aaaak-aeh2a-cai"
+  },
+  "profile": {
+    "ic": "4nczn-6aaaa-aaaak-aajza-cai"
+  },
+  "router": {
+    "ic": "ej4yk-oiaaa-aaaak-aam7a-cai"
+  },
+  "tempa": {
+    "ic": "a52ea-4yaaa-aaaak-qa6dq-cai"
+  },
+  "wallet_agent": {
+    "ic": "g2gtu-iqaaa-aaaak-acg3q-cai"
+  },
+  "wallet_agent_v2": {
+    "ic": "m3z7o-6iaaa-aaaak-aewea-cai"
+  },
+  "wallet_market": {
+    "ic": "zy5uf-kaaaa-aaaak-adgia-cai"
+  }
+}

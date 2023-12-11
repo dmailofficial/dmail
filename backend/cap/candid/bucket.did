@@ -1,0 +1,65 @@
+type DetailValue = variant {
+  I64 : int64;
+  U64 : nat64;
+  Vec : vec DetailValue;
+  Slice : vec nat8;
+  TokenIdU64 : nat64;
+  Text : text;
+  True;
+  False;
+  Float : float64;
+  Principal : principal;
+};
+type Event = record {
+  time : nat64;
+  operation : text;
+  details : vec record { text; DetailValue };
+  caller : principal;
+};
+type GetBucketResponse = record { witness : opt Witness; canister : principal };
+type GetNextCanistersResponse = record {
+  witness : opt Witness;
+  canisters : vec principal;
+};
+type GetTokenTransactionsArg = record {
+  token_id : nat64;
+  page : opt nat32;
+  witness : bool;
+};
+type GetTransactionResponse = variant {
+  Delegate : record { principal; opt Witness };
+  Found : record { opt Event; opt Witness };
+};
+type GetTransactionsArg = record { page : opt nat32; witness : bool };
+type GetTransactionsResponseBorrowed = record {
+  data : vec Event;
+  page : nat32;
+  witness : opt Witness;
+};
+type GetUserTransactionsArg = record {
+  page : opt nat32;
+  user : principal;
+  witness : bool;
+};
+type WithIdArg = record { id : nat64; witness : bool };
+type WithWitnessArg = record { witness : bool };
+type Witness = record { certificate : vec nat8; tree : vec nat8 };
+service : {
+  balance : () -> (nat64) query;
+  contract_id : () -> (principal) query;
+  get_bucket_for : (WithIdArg) -> (GetBucketResponse) query;
+  get_next_canisters : (WithWitnessArg) -> (GetNextCanistersResponse) query;
+  get_token_transactions : (GetTokenTransactionsArg) -> (
+      GetTransactionsResponseBorrowed,
+    ) query;
+  get_transaction : (WithIdArg) -> (GetTransactionResponse) query;
+  get_transactions : (GetTransactionsArg) -> (
+      GetTransactionsResponseBorrowed,
+    ) query;
+  get_user_transactions : (GetUserTransactionsArg) -> (
+      GetTransactionsResponseBorrowed,
+    ) query;
+  git_commit_hash : () -> (text) query;
+  insert_many : (vec Event) -> ();
+  size : () -> (nat64) query;
+}

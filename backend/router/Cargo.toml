@@ -1,0 +1,23 @@
+[package]
+name = "router"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+
+[dependencies]
+ic-cdk = "0.5.0"
+ic-cdk-macros = "0.5.0"
+candid = "0.7.14"
+serde = { version = "1.0.136", features = ["derive"] }
+serde_bytes = "0.11.5"
+sha2 = "0.10.0"
+# base58 = "0.2.0"
+# hex = "0.4.0"
+base64 = "0.13.0"
+
+[profile.release]
+lto = true
+opt-level = 'z'
+overflow-checks = true

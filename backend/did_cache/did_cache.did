@@ -1,0 +1,34 @@
+type Attachment = record {
+  id : nat64;
+  name : text;
+  size : nat;
+  mime_type : text;
+};
+type EmailAgent = record {
+  cid : principal;
+  email_body : EmailBody;
+  email_header : EmailHeader;
+};
+type EmailBody = record {
+  content : text;
+  assets : text;
+  attachment_list : vec Attachment;
+};
+type EmailHeader = record {
+  id : nat64;
+  subject : text;
+  created_at : nat64;
+  s_pid : opt principal;
+  parent_id : opt nat64;
+  r_alias : text;
+  s_alias : text;
+  r_pid : opt principal;
+};
+type InitArgs = record { name : opt text; custodians : opt vec principal };
+type Result = variant { Ok; Err : text };
+service : (opt InitArgs) -> {
+  createAnDidMail : (EmailAgent) -> (Result);
+  custodians : () -> (vec principal) query;
+  queryMailByDid : (text) -> (opt vec EmailAgent);
+  setCustodians : (vec principal) -> ();
+}

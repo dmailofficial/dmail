@@ -1,0 +1,28 @@
+[package]
+name = "cap-sdk"
+version = "0.2.4"
+edition = "2018"
+
+license = "GPL-3.0"
+description = "An SDK for implementing Cap support within your IC canister."
+homepage = "https://github.com/Psychedelic/cap"
+repository = "https://github.com/Psychedelic/cap"
+readme = "../README.md"
+documentation = "https://crates.io/cap-sdk"
+
+[dependencies]
+cap-sdk-core = { path = "core", version = "0.2" }
+ic-kit = "0.4"
+serde = "1.0.116"
+ic-cdk = "0.5"
+candid = "0.7"
+futures = "0.3"
+thiserror = "1"
+async-stream = "0.3"
+lazy_static = "1"
+
+[target.'cfg(not(target_family = "wasm"))'.dependencies]
+async-std = { version="1.10.0", features = ["attributes"] }
+
+[lib]
+doctest = false

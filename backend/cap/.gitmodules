@@ -1,0 +1,3 @@
+[submodule "sdk/motoko"]
+	path = sdk/motoko
+	url = https://github.com/Psychedelic/cap-motoko-library.git

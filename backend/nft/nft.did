@@ -1,0 +1,17 @@
+type DmailNFT = record { pid : principal; bind : bool; nft_list : vec NFT };
+type InitArgs = record { name : opt text; custodians : opt vec principal };
+type NFT = record { bind : bool; index : nat64; nft_content : text };
+type Result = variant { Ok : bool; Err : text };
+type Result_1 = variant { Ok; Err : text };
+type Result_2 = variant { Ok : NFT; Err : text };
+service : (opt InitArgs) -> {
+  bind : (principal, nat64, nat64) -> (Result);
+  mint : (text, principal, nat64, text, bool) -> (Result_1);
+  "query" : (principal) -> (vec NFT) query;
+  queryBindAliasByPid : (principal) -> (Result_2) query;
+  queryDmailAll : () -> (vec DmailNFT) query;
+  register : (text, principal) -> (bool);
+  transfer : (principal, principal, text, nat64) -> (Result);
+  unbind : (principal) -> (Result);
+  updateNftContent : (text, principal, nat64, text) -> (Result);
+}
