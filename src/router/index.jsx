@@ -17,6 +17,7 @@ import Assets from "@/pages/assets/index";
 import Market from "@/pages/market/index";
 import Orders from "@/pages/presale/orders/index";
 import Contact from "@/pages/contact/index";
+import Subscribe from "@/pages/subscribe/index";
 
 // import Test from "@/pages/test/index";
 // import Upgrades from "@/pages/upgrades/index";
@@ -60,6 +61,7 @@ const Routes = () => (
       <Route exact path="/orders" component={ Orders } />
       <Route exact path="/assets" component={ Assets } />
       <Route exact path="/contacts/:tabname?" component={ Contact } />
+      <Route exact path="/hubs/:tabname/:key?" component={Subscribe} />
       
       {/* <Route exact path="/test" component={Test} /> */}
       {/* <Route exact path="/upgrades" component={Upgrades} /> */}
