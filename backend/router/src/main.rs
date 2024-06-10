@@ -191,7 +191,7 @@ async fn get_private_key_info(computed_key: String) -> Result<Option<CallerToken
     let once_hash = Sha256::digest(&CALLER_SECRET_KEY.as_bytes()).to_vec();
 
     // ic_cdk::println!("once_hash---{:?}", &once_hash);
-    // ic_cdk::println!("once_hash lenght: {}", &once_hash.len());
+    // ic_cdk::println!("once_hash length: {}", &once_hash.len());
 
     buffer[1..21].copy_from_slice(&once_hash[0..20]);
     let sum = &Sha256::digest(Sha256::digest(&buffer[0..21]))[0..4];

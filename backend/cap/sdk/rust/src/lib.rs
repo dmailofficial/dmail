@@ -13,7 +13,7 @@
 //!
 //! # Additional Developer Resources
 //! There are developer resources such as diagrams, additional
-//! documentation, and examples in the [cap-sdk respository](https://github.com/Psychedelic/cap/tree/cap-sdk/sdk).
+//! documentation, and examples in the [cap-sdk repository](https://github.com/Psychedelic/cap/tree/cap-sdk/sdk).
 //!
 //! # ⚠️ Updating your canister ⚠️
 //!

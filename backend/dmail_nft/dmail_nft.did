@@ -66,7 +66,7 @@
 
  type MetadataPurpose =
  variant {
-     Preview; // used as a preview, can be used as preivew in a wallet
+     Preview; // used as a preview, can be used as preview in a wallet
      Rendered; // used as a detailed version of the NFT
  };
 
